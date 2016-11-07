@@ -1,0 +1,19 @@
+rslsync-readwrite:
+  restart: always
+  labels:
+    io.rancher.scheduler.global: 'true'
+    io.rancher.scheduler.affinity:host_label: lb=True	
+  image: danieldent/rslsync-dir
+  environment:
+    SYNC_KEY: YOUR_SYNC_KEY_GOES_HERE
+    LISTEN_PORT: 12345
+  ports:
+    - "12345:12345"
+  volumes:
+    - "letsencrypt-certs:/sync_dir"
+  log_opt:
+    max-size: 1m
+  memswap_limit: 0
+  mem_limit: 64000000
+  cpu_shares: 512
+

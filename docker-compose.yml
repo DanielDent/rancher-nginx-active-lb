@@ -1,0 +1,18 @@
+lb:
+  image: $CI_REGISTRY_IMAGE:sha-$CI_BUILD_REF
+  ports:
+    - 80:80
+    - 443:443
+  volumes:
+    - "letsencrypt-certs:/data/certs"
+  labels:
+    io.rancher.scheduler.global: True
+    io.rancher.scheduler.affinity:host_label: lb=True
+
+example-service:
+  image: nginx
+  expose:
+    - 80
+  labels:
+    com.danieldent.rancher-nginx-active-lb.published-host: example.com
+    com.danieldent.rancher-lets-encrypt.hosts: example.com
