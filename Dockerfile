@@ -11,5 +11,6 @@ COPY dhparams.pem /etc/nginx
 COPY errorpages/* /usr/share/nginx/html/
 COPY services.d/nginx /etc/services.d/nginx
 COPY services.d/lb-config-gen /etc/services.d/lb-config-gen
+COPY services.d/autoreload /etc/services.d/autoreload
 COPY lb-config-gen.py /
 ENTRYPOINT ["/init"]
