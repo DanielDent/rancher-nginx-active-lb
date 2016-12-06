@@ -4,7 +4,7 @@ lb:
     - 80:80
     - 443:443
   volumes:
-    - "$CERTIFICATE_VOLUME:/data/certs"
+    - "$NGINX_ACTIVE_LB_CERTIFICATE_VOLUME:/data/certs"
   labels:
     io.rancher.scheduler.global: True
     io.rancher.scheduler.affinity:host_label: lb-$SERVICE_COLOR=True
@@ -16,5 +16,5 @@ drain-plug:
   labels:
     io.rancher.scheduler.global: True
     io.rancher.scheduler.affinity:host_label: lb-$SERVICE_COLOR=True
-    com.danieldent.rancher-nginx-active-lb.published-host: $SERVICE_COLOR.$DRAINPLUG_SUFFIX
-    com.danieldent.rancher-lets-encrypt.hosts: $SERVICE_COLOR.$DRAINPLUG_SUFFIX
+    com.danieldent.rancher-nginx-active-lb.published-host: $SERVICE_COLOR.$NGINX_ACTIVE_LB_DRAINPLUG_SUFFIX
+    com.danieldent.rancher-lets-encrypt.hosts: $SERVICE_COLOR.$NGINX_ACTIVE_LB_DRAINPLUG_SUFFIX
