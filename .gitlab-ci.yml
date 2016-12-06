@@ -1,6 +1,7 @@
 
+image: danieldent/docker-builder
+
 build:
-  image: danieldent/docker-builder
   services:
     - docker:dind
   script:
@@ -14,9 +15,14 @@ deploy:
   stage: deploy
   environment:
     name: $CI_BUILD_REF_NAME
+  variables:
+    NGINX_ACTIVE_LB_DRAINPLUG_SUFFIX: "example.com"
+    NGINX_ACTIVE_LB_CERTIFICATE_VOLUME: "letsencrypt-certs"
   only:
     - /^env-.*$/
+    - blue
+    - green
   tags:
     - deploy
   script:
-    - rancher-compose up -d -u
+    - SERVICE_COLOR=$CI_BUILD_REF_NAME rancher-compose -p rancher-nginx-active-lb-$CI_BUILD_REF_NAME up -d -u
