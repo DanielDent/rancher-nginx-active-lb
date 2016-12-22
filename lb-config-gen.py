@@ -202,7 +202,14 @@ def get_nginx_config():
 if __name__ == '__main__':
     last_output = "EMPTYNESS"
     while True:
-        full_output = base_config + get_nginx_config() + "}"
+        try:
+            full_output = base_config + get_nginx_config() + "}"
+        except Exception as e:
+            print("Exception while pulling configuration from metadata service:")
+            print(str(e))
+            full_output = "EMPTYNESS"
+            last_output = "EMPTYNESS"
+
         if last_output != full_output:
             print("Generating configuration...")
             with open(nginx_config_dir + "/nginx.conf.temp", 'w') as config_file:
