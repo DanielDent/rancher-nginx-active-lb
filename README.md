@@ -22,6 +22,9 @@ The `com.danieldent.rancher-nginx-active-lb.published-host` label configures whi
 container by `rancher-nginx-active-lb`, while the `com.danieldent.rancher-lets-encrypt.hosts` label configures which
 hostnames will have SSL certificates managed by rancher-lets-encrypt.
 
+The optional `com.danieldent.rancher-nginx-active-lb.published-port` label allows exposure of a service running on an
+arbitrary port.
+
 If load balancing is done by multiple hosts, this service assumes you are also making use of a system to synchronize the
 docker volume on which certificates are stored. If a shared volume is not available, an example which uses Resilio Sync
 to synchronize the certificate directory is available in the example folder.

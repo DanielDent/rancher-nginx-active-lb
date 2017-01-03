@@ -177,15 +177,22 @@ def get_nginx_config():
     published_hosts = {}
 
     for service in get_current_services():
+        if 'com.danieldent.rancher-nginx-active-lb.published-port' in service['labels']:
+            published_port = service['labels']['com.danieldent.rancher-nginx-active-lb.published-port']
+            # this syntax only works with IPv4 addresses, but Rancher is v4 for now too
+            service_address = service['primary_ip'] + ':' + published_port
+        else:
+            service_address = service['primary_ip']
+
         if service['state'] == 'running' and 'labels' in service and 'com.danieldent.rancher-nginx-active-lb.acme-host' in service['labels']:
-            acme_hosts.append(service['primary_ip'])
+            acme_hosts.append( service_address )
 
         if service['state'] == 'running' and 'labels' in service and 'com.danieldent.rancher-nginx-active-lb.published-host' in service['labels']:
             for host in service['labels']['com.danieldent.rancher-nginx-active-lb.published-host'].split(","):
                 if host in published_hosts:
-                    published_hosts[host].append( service['primary_ip'] )
+                    published_hosts[host].append( service_address )
                 else:
-                    published_hosts[host] = [ service['primary_ip'] ]
+                    published_hosts[host] = [ service_address ]
 
     if len(acme_hosts) > 0:
         output = upstream_config("acme-service", acme_hosts)
