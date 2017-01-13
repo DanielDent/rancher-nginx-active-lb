@@ -16,7 +16,7 @@ example-service:
 
 An nginx configuration file is automatically generated based on which services are launched in the Rancher environment.
 This service is designed for an all-SSL environment, and is a companion to
-[rancher-lets-encrypt](https://gitlab.com/DanielDent/rancher-lets-encrypt).
+[rancher-lets-encrypt](https://github.com/DanielDent/rancher-lets-encrypt).
 
 The `com.danieldent.rancher-nginx-active-lb.published-host` label configures which hostnames will be routed to a
 container by `rancher-nginx-active-lb`, while the `com.danieldent.rancher-lets-encrypt.hosts` label configures which
