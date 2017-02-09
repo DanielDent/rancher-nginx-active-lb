@@ -8,6 +8,7 @@ RUN /usr/local/bin/add-repo-nginx.sh \
     && /usr/local/bin/install-s6-overlay.sh \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y python3-urllib3
 COPY dhparams.pem /etc/nginx
+COPY default-server-cert /etc/nginx/default-server-cert
 COPY errorpages/* /usr/share/nginx/html/
 COPY services.d/nginx /etc/services.d/nginx
 COPY services.d/lb-config-gen /etc/services.d/lb-config-gen
