@@ -183,7 +183,7 @@ def vhost_config(hostname, ips, do_acme):
         config = config + service_https_vhost
         config = re.sub("UPSTREAM_GOES_HERE", upstream_config(hostname, ips), config)
         config = re.sub("CERTIFICATE_LOCATION_GOES_HERE", certificate_path + "/" + hostname, config)
-        config = re.sub("HANDLE_HTTP_GOES_HERE", "return 301 https://$server_name$request_uri;", config)
+        config = re.sub("HANDLE_HTTP_GOES_HERE", "location / { return 301 https://$server_name$request_uri; }", config)
     else:
         config = re.sub("HANDLE_HTTP_GOES_HERE", refuse_service, config)
 
